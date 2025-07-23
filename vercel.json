@@ -1,25 +1,15 @@
 {
+	"$schema": "https://openapi.vercel.sh/vercel.json",
 	"installCommand": "yarn install --cwd pwa-react && yarn install --cwd api-react",
 	"buildCommand": "cd pwa-react && yarn build",
-	"builds": [
+	"rewrites": [
 		{
-			"src": "pwa-react/package.json",
-			"use": "@vercel/static-build",
-			"config": { "outputDirectory": "build" }
+			"source": "/api/(.*)",
+			"destination": "api-react/index.js"
 		},
 		{
-			"src": "api-react/index.js",
-			"use": "@vercel/node"
-		}
-	],
-	"routes": [
-		{
-			"src": "/api/(.*)",
-			"dest": "api-react/index.js"
-		},
-		{
-			"src": "/(.*)",
-			"dest": "pwa-react/build/$1"
+			"source": "/(.*)",
+			"destination": "pwa-react/build/$1"
 		}
 	]
 }
